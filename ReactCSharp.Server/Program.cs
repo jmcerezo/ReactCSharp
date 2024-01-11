@@ -4,7 +4,6 @@ using ReactCSharp.Server.Dto;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 SqlHelper sql = new(connectionString);
 
 // Add services to the container.
@@ -39,6 +38,10 @@ app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.MapPost("/api/Users", (UserDto userDto) => sql.RegisterUser(userDto));
+
+app.MapGet("/api/Users", () => sql.GetAllUsers());
+
+app.MapGet("/api/Users/{id}", (int id) => sql.GetUserById(id));
 
 app.MapFallbackToFile("/index.html");
 

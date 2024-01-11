@@ -12,10 +12,21 @@ namespace ReactCSharp.Server.Data
         {
             string sqlProcedure = "InsertNewUser";
 
-            // TODO: Fix data in response (empty array)
-            var users = await Task.FromResult(sqlDataAccess.RegisterUser(userDto, sqlProcedure, _connectionString));
+            return await sqlDataAccess.RegisterUser(userDto, sqlProcedure, _connectionString);
+        }
 
-            return users;
+        public async Task<List<User>> GetAllUsers()
+        {
+            string sqlString = "SELECT * FROM Users ORDER BY id";
+
+            return await sqlDataAccess.GetAllUsers(sqlString, _connectionString);
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            string sqlString = "SELECT * FROM Users WHERE id = @id";
+
+            return await sqlDataAccess.GetUserById(id, sqlString, _connectionString);
         }
     }
 }
