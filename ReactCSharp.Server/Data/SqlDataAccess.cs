@@ -86,9 +86,7 @@ namespace ReactCSharp.Server.Data
             }
             await reader.CloseAsync();
 
-            var user = users.Find(x => x.Id == id);
-
-            return user;
+            return users[0];
         }
     }
 }
