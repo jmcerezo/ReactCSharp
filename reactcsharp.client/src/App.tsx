@@ -94,11 +94,6 @@ function App() {
     }
 
     const validateForm = () => {
-        validateFirstName(firstName)
-        validateLastName(lastName)
-        validateEmailAddress(emailAddress)
-        validatePhoneNumber(phoneNumber)
-
         return (
             validateFirstName(firstName) &&
             validateLastName(lastName) &&
@@ -156,10 +151,10 @@ function App() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
             >
-                <TextField id="firstName" label="First Name" variant="outlined" required fullWidth value={firstName} helperText={firstNameError} onChange={handleChange} />
-                <TextField id="lastName" label="Last Name" variant="outlined" required fullWidth value={lastName} helperText={lastNameError} onChange={handleChange} />
-                <TextField id="emailAddress" label="Email Address" variant="outlined" required fullWidth value={emailAddress} helperText={emailAddressError} onChange={handleChange} />
-                <TextField id="phoneNumber" label="Phone Number" variant="outlined" type="number" required fullWidth value={phoneNumber} helperText={phoneNumberError} onChange={handleChange} />
+                <TextField id="firstName" label="First Name" variant="outlined" required fullWidth value={firstName} helperText={firstNameError} onChange={handleChange} onBlur={() => validateFirstName(firstName)} />
+                <TextField id="lastName" label="Last Name" variant="outlined" required fullWidth value={lastName} helperText={lastNameError} onChange={handleChange} onBlur={() => validateLastName(lastName)} />
+                <TextField id="emailAddress" label="Email Address" variant="outlined" required fullWidth value={emailAddress} helperText={emailAddressError} onChange={handleChange} onBlur={() => validateEmailAddress(emailAddress)} />
+                <TextField id="phoneNumber" label="Phone Number" variant="outlined" type="number" required fullWidth value={phoneNumber} helperText={phoneNumberError} onChange={handleChange} onBlur={() => validatePhoneNumber(phoneNumber)} />
                 <Button variant="contained" type="submit">Submit</Button>
             </Box>
         </div>
