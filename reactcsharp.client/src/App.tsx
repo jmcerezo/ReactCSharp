@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -151,10 +151,51 @@ function App() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
             >
-                <TextField id="firstName" label="First Name" variant="outlined" required fullWidth value={firstName} helperText={firstNameError} onChange={handleChange} onBlur={() => validateFirstName(firstName)} />
-                <TextField id="lastName" label="Last Name" variant="outlined" required fullWidth value={lastName} helperText={lastNameError} onChange={handleChange} onBlur={() => validateLastName(lastName)} />
-                <TextField id="emailAddress" label="Email Address" variant="outlined" required fullWidth value={emailAddress} helperText={emailAddressError} onChange={handleChange} onBlur={() => validateEmailAddress(emailAddress)} />
-                <TextField id="phoneNumber" label="Phone Number" variant="outlined" type="number" required fullWidth value={phoneNumber} helperText={phoneNumberError} onChange={handleChange} onBlur={() => validatePhoneNumber(phoneNumber)} />
+                <TextField
+                    id="firstName"
+                    label="First Name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    value={firstName}
+                    helperText={firstNameError}
+                    onChange={handleChange}
+                    onBlur={() => validateFirstName(firstName)}
+                />
+                <TextField
+                    id="lastName"
+                    label="Last Name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    value={lastName}
+                    helperText={lastNameError}
+                    onChange={handleChange}
+                    onBlur={() => validateLastName(lastName)}
+                />
+                <TextField
+                    id="emailAddress"
+                    label="Email Address"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    value={emailAddress}
+                    helperText={emailAddressError}
+                    onChange={handleChange}
+                    onBlur={() => validateEmailAddress(emailAddress)}
+                />
+                <TextField
+                    id="phoneNumber"
+                    label="Phone Number"
+                    variant="outlined"
+                    type="number"
+                    required
+                    fullWidth
+                    value={phoneNumber}
+                    helperText={phoneNumberError}
+                    onChange={handleChange}
+                    onBlur={() => validatePhoneNumber(phoneNumber)}
+                />
                 <Button variant="contained" type="submit">Submit</Button>
             </Box>
         </div>
