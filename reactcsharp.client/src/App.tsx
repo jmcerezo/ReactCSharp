@@ -8,113 +8,113 @@ import './App.css';
 
 function App() {
     const [firstName, setFirstName] = useState("");
-    const [firstNameError, setFirstNameError] = useState("");
+    const [firstNameError, setFirstNameError] = useState({ msg: "", err: false });
     const [lastName, setLastName] = useState("");
-    const [lastNameError, setLastNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState({ msg: "", err: false });
     const [emailAddress, setEmailAddress] = useState("");
-    const [emailAddressError, setEmailAddressError] = useState("");
+    const [emailAddressError, setEmailAddressError] = useState({ msg: "", err: false });
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [phoneNumberError, setPhoneNumberError] = useState("");
-    const alphabetsRegex = /^[a-zA-Z ]*$/
-    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
-    const phoneRegex = /^!*([0-9]!*){10,}$/
+    const [phoneNumberError, setPhoneNumberError] = useState({ msg: "", err: false });
+    const alphabetsRegex = /^[a-zA-Z ]*$/;
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const phoneRegex = /^!*([0-9]!*){10,}$/;
 
     const validateFirstName = (name: string) => {
         let isValid;
 
         if (name.trim() === "") {
-            setFirstNameError("This is required");
+            setFirstNameError({ msg: "This is required", err: true });
             isValid = false;
         } else if (!alphabetsRegex.test(name)) {
-            setFirstNameError("Enter alphabets only")
+            setFirstNameError({ msg: "Enter alphabets only", err: true });
             isValid = false;
         } else if (name.trim().length < 2) {
-            setFirstNameError("Enter at least 2 characters")
+            setFirstNameError({ msg: "Enter at least 2 characters", err: true });
             isValid = false;
         } else {
-            setFirstNameError("")
+            setFirstNameError({ msg: "", err: false });
             isValid = true;
         }
 
-        return isValid
+        return isValid;
     }
 
     const validateLastName = (name: string) => {
         let isValid;
 
         if (name.trim() === "") {
-            setLastNameError("This is required");
+            setLastNameError({ msg: "This is required", err: true });
             isValid = false;
         } else if (!alphabetsRegex.test(name)) {
-            setLastNameError("Enter alphabets only")
+            setLastNameError({ msg: "Enter alphabets only", err: true });
             isValid = false;
         } else if (name.trim().length < 2) {
-            setLastNameError("Enter at least 2 characters")
+            setLastNameError({ msg: "Enter at least 2 characters", err: true });
             isValid = false;
         } else {
-            setLastNameError("")
+            setLastNameError({ msg: "", err: false });
             isValid = true;
         }
 
-        return isValid
+        return isValid;
     }
 
     const validateEmailAddress = (email: string) => {
         let isValid;
 
         if (email.trim() === "") {
-            setEmailAddressError("This is required");
+            setEmailAddressError({ msg: "This is required", err: true });
             isValid = false;
         } else if (!emailRegex.test(email)) {
-            setEmailAddressError("Enter valid email address")
+            setEmailAddressError({ msg: "Enter valid email address", err: true });
             isValid = false;
         } else {
-            setEmailAddressError("")
+            setEmailAddressError({ msg: "", err: false });
             isValid = true;
         }
 
-        return isValid
+        return isValid;
     }
 
     const validatePhoneNumber = (phone: string) => {
         let isValid;
 
-        if (!phone) {
-            setPhoneNumberError("This is required");
+        if (phone === "") {
+            setPhoneNumberError({ msg: "This is required", err: true });
             isValid = false;
         } else if (!phoneRegex.test(phone)) {
-            setPhoneNumberError("Enter at least 10 digits")
+            setPhoneNumberError({ msg: "Enter at least 10 digits", err: true });
             isValid = false;
         } else {
-            setPhoneNumberError("")
+            setPhoneNumberError({ msg: "", err: false });
             isValid = true;
         }
 
-        return isValid
+        return isValid;
     }
 
-    const validateForm = () => {
-        return (
-            validateFirstName(firstName) &&
-            validateLastName(lastName) &&
-            validateEmailAddress(emailAddress) &&
-            validatePhoneNumber(phoneNumber)
-        )
+    const checkFormValidity = () => {
+        const isFirstNameValid = validateFirstName(firstName);
+        const isLastNameValid = validateLastName(lastName);
+        const isEmailValid = validateEmailAddress(emailAddress);
+        const isPhoneValid = validatePhoneNumber(phoneNumber);
+
+        return isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid;
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.id === "firstName") {
-            setFirstName(e.target.value)
-            validateFirstName(e.target.value)
+            setFirstName(e.target.value);
+            validateFirstName(e.target.value);
         } else if (e.target.id === "lastName") {
-            setLastName(e.target.value)
-            validateLastName(e.target.value)
+            setLastName(e.target.value);
+            validateLastName(e.target.value);
         } else if (e.target.id === "emailAddress") {
-            setEmailAddress(e.target.value)
-            validateEmailAddress(e.target.value)
+            setEmailAddress(e.target.value);
+            validateEmailAddress(e.target.value);
         } else if (e.target.id === "phoneNumber") {
-            setPhoneNumber(e.target.value)
-            validatePhoneNumber(e.target.value)
+            setPhoneNumber(e.target.value);
+            validatePhoneNumber(e.target.value);
         }
     }
 
@@ -122,18 +122,18 @@ function App() {
         e.preventDefault();
 
         const data = { firstName, lastName, emailAddress, phoneNumber };
-        const formIsValid = validateForm()
+        const formIsValid = checkFormValidity();
 
         if (formIsValid) {
             axios.post("https://localhost:7154/api/Users", data).then((res) => {
-                console.log(res.status)
+                console.log(res.status);
 
-                setFirstName("")
-                setLastName("")
-                setEmailAddress("")
-                setPhoneNumber("")
+                setFirstName("");
+                setLastName("");
+                setEmailAddress("");
+                setPhoneNumber("");
 
-                alert("Successfully registered")
+                alert("Successfully registered");
             })
         }
     }
@@ -158,7 +158,8 @@ function App() {
                     required
                     fullWidth
                     value={firstName}
-                    helperText={firstNameError}
+                    helperText={firstNameError.msg}
+                    error={firstNameError.err}
                     onChange={handleChange}
                     onBlur={() => validateFirstName(firstName)}
                 />
@@ -169,7 +170,8 @@ function App() {
                     required
                     fullWidth
                     value={lastName}
-                    helperText={lastNameError}
+                    helperText={lastNameError.msg}
+                    error={lastNameError.err}
                     onChange={handleChange}
                     onBlur={() => validateLastName(lastName)}
                 />
@@ -180,7 +182,8 @@ function App() {
                     required
                     fullWidth
                     value={emailAddress}
-                    helperText={emailAddressError}
+                    helperText={emailAddressError.msg}
+                    error={emailAddressError.err}
                     onChange={handleChange}
                     onBlur={() => validateEmailAddress(emailAddress)}
                 />
@@ -192,7 +195,8 @@ function App() {
                     required
                     fullWidth
                     value={phoneNumber}
-                    helperText={phoneNumberError}
+                    helperText={phoneNumberError.msg}
+                    error={phoneNumberError.err}
                     onChange={handleChange}
                     onBlur={() => validatePhoneNumber(phoneNumber)}
                 />
