@@ -1,8 +1,7 @@
-﻿namespace ReactCSharp.Server.Models
+﻿namespace RegistrationApp.Server.Dto
 {
-    public class User
+    public class UserDto
     {
-        public int Id { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required string EmailAddress { get; set; }

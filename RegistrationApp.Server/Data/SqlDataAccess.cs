@@ -1,8 +1,8 @@
-﻿using ReactCSharp.Server.Dto;
-using ReactCSharp.Server.Models;
+﻿using RegistrationApp.Server.Dto;
+using RegistrationApp.Server.Models;
 using System.Data.SqlClient;
 
-namespace ReactCSharp.Server.Data
+namespace RegistrationApp.Server.Data
 {
     public class SqlDataAccess
     {

@@ -1,4 +1,4 @@
-# React CSharp
+# Registration App
 
 ## React and ASP.NET Core
 

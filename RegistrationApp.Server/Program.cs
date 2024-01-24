@@ -1,5 +1,5 @@
-using ReactCSharp.Server.Data;
-using ReactCSharp.Server.Dto;
+using RegistrationApp.Server.Data;
+using RegistrationApp.Server.Dto;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;

@@ -1,7 +1,7 @@
-﻿using ReactCSharp.Server.Dto;
-using ReactCSharp.Server.Models;
+﻿using RegistrationApp.Server.Dto;
+using RegistrationApp.Server.Models;
 
-namespace ReactCSharp.Server.Data
+namespace RegistrationApp.Server.Data
 {
     public class SqlHelper(string connectionString)
     {
