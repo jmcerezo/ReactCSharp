@@ -8,11 +8,11 @@ namespace RegistrationApp.Server.Data
         private readonly string _connectionString = connectionString;
         readonly SqlDataAccess sqlDataAccess = new();
 
-        public async Task<List<User>> RegisterUser(UserDto userDto)
+        public async Task<User> RegisterUser(CreateUserDto createUserDto)
         {
             string sqlProcedure = "InsertNewUser";
 
-            return await sqlDataAccess.RegisterUser(userDto, sqlProcedure, _connectionString);
+            return await sqlDataAccess.RegisterUser(createUserDto, sqlProcedure, _connectionString);
         }
 
         public async Task<List<User>> GetAllUsers()
@@ -27,6 +27,20 @@ namespace RegistrationApp.Server.Data
             string sqlString = "SELECT * FROM Users WHERE id = @id";
 
             return await sqlDataAccess.GetUserById(id, sqlString, _connectionString);
+        }
+
+        public async Task<User> UpdateUser(int id, UpdateUserDto updateUserDto)
+        {
+            string sqlProcedure = "UpdateUser";
+
+            return await sqlDataAccess.UpdateUser(id, updateUserDto, sqlProcedure, _connectionString);
+        }
+
+        public async Task<User> DeleteUser(int id)
+        {
+            string sqlProcedure = "DeleteUser";
+
+            return await sqlDataAccess.DeleteUser(id, sqlProcedure, _connectionString);
         }
     }
 }

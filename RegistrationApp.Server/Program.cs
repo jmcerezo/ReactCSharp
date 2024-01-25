@@ -37,11 +37,15 @@ app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-app.MapPost("/api/Users", (UserDto userDto) => sql.RegisterUser(userDto));
+app.MapPost("/api/Users", (CreateUserDto createUserDto) => sql.RegisterUser(createUserDto));
 
 app.MapGet("/api/Users", () => sql.GetAllUsers());
 
 app.MapGet("/api/Users/{id}", (int id) => sql.GetUserById(id));
+
+app.MapPut("/api/Users/{id}", (int id, UpdateUserDto updateUserDto) => sql.UpdateUser(id, updateUserDto));
+
+app.MapDelete("/api/Users/{id}", (int id) => sql.DeleteUser(id));
 
 app.MapFallbackToFile("/index.html");
 
