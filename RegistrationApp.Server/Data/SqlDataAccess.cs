@@ -21,10 +21,9 @@ namespace RegistrationApp.Server.Data
             cmd.Parameters.AddWithValue("@phone_number", createUserDto.PhoneNumber);
 
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
-            List<User> users = [];
-            await ConvertData(reader, users);
+            var user = await ConvertData(reader);
 
-            return users[0];
+            return user;
         }
 
         public async Task<List<User>> GetAllUsers(string sqlQuery, string connectionString)
@@ -34,8 +33,7 @@ namespace RegistrationApp.Server.Data
 
             SqlCommand cmd = new(sqlQuery, conn);
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
-            List<User> users = [];
-            await ConvertData(reader, users);
+            var users = await ConvertData(reader);
 
             return users;
         }
@@ -49,10 +47,9 @@ namespace RegistrationApp.Server.Data
             cmd.Parameters.AddWithValue("@id", id);
 
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
-            List<User> users = [];
-            await ConvertData(reader, users);
+            var user = await ConvertData(reader);
 
-            return users[0];
+            return user;
         }
 
         public async Task<User> UpdateUser(int id, UpdateUserDto updateUserDto, string sqlQuery, string connectionString)
@@ -71,10 +68,9 @@ namespace RegistrationApp.Server.Data
             cmd.Parameters.AddWithValue("@phone_number", updateUserDto.PhoneNumber);
 
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
-            List<User> users = [];
-            await ConvertData(reader, users);
+            var user = await ConvertData(reader);
 
-            return users[0];
+            return user;
         }
 
         public async Task<User> DeleteUser(int id, string sqlQuery, string connectionString)
@@ -89,14 +85,14 @@ namespace RegistrationApp.Server.Data
             cmd.Parameters.AddWithValue("@id", id);
 
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
-            List<User> users = [];
-            await ConvertData(reader, users);
+            var user = await ConvertData(reader);
 
-            return users[0];
+            return user;
         }
 
-        private static async Task ConvertData(SqlDataReader reader, List<User> users)
+        private async Task<dynamic> ConvertData(SqlDataReader reader)
         {
+            List<User> users = [];
             while (await reader.ReadAsync())
             {
                 User user = new()
@@ -110,6 +106,7 @@ namespace RegistrationApp.Server.Data
                 users.Add(user);
             }
             await reader.CloseAsync();
+            return users.Count > 1 ? users : users[0];
         }
     }
 }
