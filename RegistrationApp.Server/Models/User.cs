@@ -3,9 +3,9 @@
     public class User
     {
         public int Id { get; set; }
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
-        public required string EmailAddress { get; set; }
+        public string FirstName { get; set; } = String.Empty;
+        public string LastName { get; set; } = String.Empty;
+        public string EmailAddress { get; set; } = String.Empty;
         public long PhoneNumber { get; set; }
     }
 }

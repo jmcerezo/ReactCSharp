@@ -33,7 +33,7 @@ namespace RegistrationApp.Server.Data
 
             SqlCommand cmd = new(sqlQuery, conn);
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
-            var users = await ConvertData(reader);
+            var users = await ConvertData(reader, "list");
 
             return users;
         }
@@ -90,23 +90,41 @@ namespace RegistrationApp.Server.Data
             return user;
         }
 
-        private async Task<dynamic> ConvertData(SqlDataReader reader)
+        private async Task<dynamic> ConvertData(SqlDataReader reader, string? type = "")
         {
-            List<User> users = [];
-            while (await reader.ReadAsync())
+            if (type == "list")
             {
-                User user = new()
+                List<User> users = [];
+                while (await reader.ReadAsync())
                 {
-                    Id = Convert.ToInt32(reader["id"]),
-                    FirstName = Convert.ToString(reader["first_name"])!,
-                    LastName = Convert.ToString(reader["last_name"])!,
-                    EmailAddress = Convert.ToString(reader["email_address"])!,
-                    PhoneNumber = Convert.ToInt64(reader["phone_number"]),
-                };
-                users.Add(user);
+                    User user = new()
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        FirstName = Convert.ToString(reader["first_name"])!,
+                        LastName = Convert.ToString(reader["last_name"])!,
+                        EmailAddress = Convert.ToString(reader["email_address"])!,
+                        PhoneNumber = Convert.ToInt64(reader["phone_number"]),
+                    };
+                    users.Add(user);
+                }
+                await reader.CloseAsync();
+                return users;
             }
-            await reader.CloseAsync();
-            return users.Count > 1 ? users : users[0];
+
+            else
+            {
+                User user = new();
+                while (await reader.ReadAsync())
+                {
+                    user.Id = Convert.ToInt32(reader["id"]);
+                    user.FirstName = Convert.ToString(reader["first_name"])!;
+                    user.LastName = Convert.ToString(reader["last_name"])!;
+                    user.EmailAddress = Convert.ToString(reader["email_address"])!;
+                    user.PhoneNumber = Convert.ToInt64(reader["phone_number"]);
+                }
+                await reader.CloseAsync();
+                return user;
+            }
         }
     }
 }
